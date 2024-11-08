@@ -13,7 +13,7 @@ Game::Game(std::string tabName, int windowWidth, int windowHeight) :
 
     _score = 0;
     _player = std::make_unique<Player>(_windowWidth / 2 - _windowWidth * 0.1, _windowHeight * 0.9, _windowWidth * 0.20, _windowHeight * 0.05, PLAYERSPEED);
-    _ball = std::make_unique<Ball>(_windowWidth / 2, _windowHeight / 2, BALLSPEED, BALLSPEED, 10);
+    _ball = std::make_unique<Ball>(_windowWidth / 2, _windowHeight / 2, 0, 0, 10);
 }
 
 
@@ -21,8 +21,19 @@ void Game::start() {
     InitWindow(_windowWidth, _windowHeight, _tabName.c_str());
     SetTargetFPS(60);
 
+    bool gameStarted = false;
+
     while (!WindowShouldClose())
     {
+
+        // Start game when pressing space
+        if (!gameStarted && IsKeyPressed(KEY_SPACE)) {
+            gameStarted = true;
+            _ball->speedX = BALLSPEED;
+            _ball->speedY = BALLSPEED;
+        }
+
+
         //Update
         _player->move();
         _ball->move();
