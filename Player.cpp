@@ -3,11 +3,11 @@
 
 Player::Player(float x, float y, float width, float height, float speed) : x(x), y(y), width(width), height(height), speed(speed) {}
 
-void Player::Draw() {
+void Player::draw() {
 	DrawRectangle(x, y, width, height, BLACK);
 }
 
-void Player::Move() {
+void Player::move() {
 
 	if (IsKeyDown(KEY_RIGHT)) {
 
@@ -25,6 +25,6 @@ void Player::Move() {
 	}
 }
 
-Rectangle Player::getRectangle() {
+Rectangle Player::get_rectangle() {
 	return Rectangle{ x, y, width, height };
 }

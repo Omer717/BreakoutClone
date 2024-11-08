@@ -7,9 +7,9 @@ public:
 	float width, height, speed;
 	
 	Player(float x, float y, float width, float height, float speed);
-	void Draw();
-	void Move();
-	Rectangle getRectangle();
+	void draw();
+	void move();
+	Rectangle get_rectangle();
 
 private:
 

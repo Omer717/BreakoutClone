@@ -7,6 +7,6 @@ public:
 	float radius;
 
 	Ball(float x, float y, int speedX, int speedY, float radius);
-	void Draw();
-	void Move();
+	void draw();
+	void move();
 };

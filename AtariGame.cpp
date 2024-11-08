@@ -8,6 +8,7 @@ int main(void)
     int windowHeight = 500;
 
     Game game(tabName, windowWidth, windowHeight);
+    game.start();
 
     return 0;
 }
