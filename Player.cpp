@@ -8,5 +8,15 @@ void Player::Draw() {
 }
 
 void Player::Move(int playerSpeed) {
-	x += playerSpeed;
+
+	if (x + width + playerSpeed >= GetScreenWidth()) {
+		x = GetScreenWidth() - width;
+	}
+	else if (x + playerSpeed <= 0) {
+		x = 0;
+	}
+	else {
+		x += playerSpeed;
+	}
+
 }
