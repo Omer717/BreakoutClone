@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AtariGame.cpp" />
+    <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
@@ -147,6 +148,7 @@
     <ResourceCompile Include="AtariGame.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ball.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
