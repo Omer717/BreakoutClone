@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "raylib.h"
 #include "Ball.h"
+#include <iostream>
+#include <format>
 
 #define PLAYERSPEED 5
 #define BALLSPEED 5
@@ -47,6 +49,7 @@ void Game::start() {
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
+        draw_score();
         _player->draw();
         _ball->draw();
 
@@ -54,4 +57,8 @@ void Game::start() {
     }
 
     CloseWindow();
+}
+
+void Game::draw_score() {
+    DrawText(std::format("Score: {}", _score).c_str(), 5, 5, 26, BLACK);
 }

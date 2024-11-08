@@ -18,4 +18,6 @@ private:
 	std::unique_ptr<Ball> _ball;
 
 	int _score;
+
+	void draw_score();
 };
