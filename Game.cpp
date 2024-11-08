@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "raylib.h"
 
+#define PLAYERSPEED 2
+
 Game::Game(std::string tabName, int windowWidth, int windowHeight) :
 	_tabName(tabName),
 	_windowWidth(windowWidth),
@@ -10,14 +12,12 @@ Game::Game(std::string tabName, int windowWidth, int windowHeight) :
 	InitWindow(_windowWidth, _windowHeight, _tabName.c_str());
     SetTargetFPS(60);
 
-    Player player(_windowWidth / 2 - _windowWidth * 0.1, _windowHeight * 0.9, _windowWidth * 0.20, _windowHeight * 0.05);
+    Player player(_windowWidth / 2 - _windowWidth * 0.1, _windowHeight * 0.9, _windowWidth * 0.20, _windowHeight * 0.05, PLAYERSPEED);
 
     while (!WindowShouldClose())
-    {
+    { 
         //Update
-        if (IsKeyDown(KEY_RIGHT)) player.Move(2);
-        if (IsKeyDown(KEY_LEFT)) player.Move(-2);
-
+        player.Move();
 
         BeginDrawing();
         ClearBackground(RAYWHITE);

@@ -3,11 +3,11 @@
 class Player {
 public:
 	float x, y;
-	int width, height;
+	int width, height, speed;
 	
-	Player(float x, float y, int width, int height);
+	Player(float x, float y, int width, int height, int speed);
 	void Draw();
-	void Move(int moveSpeed);
+	void Move();
 
 private:
 

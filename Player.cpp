@@ -1,22 +1,26 @@
 #include "Player.h"
 #include <raylib.h>
 
-Player::Player(float x, float y, int width, int height) : x(x), y(y), width(width), height(height) {}
+Player::Player(float x, float y, int width, int height, int speed) : x(x), y(y), width(width), height(height), speed(speed) {}
 
 void Player::Draw() {
 	DrawRectangle(x, y, width, height, BLACK);
 }
 
-void Player::Move(int playerSpeed) {
+void Player::Move() {
 
-	if (x + width + playerSpeed >= GetScreenWidth()) {
-		x = GetScreenWidth() - width;
-	}
-	else if (x + playerSpeed <= 0) {
-		x = 0;
-	}
-	else {
-		x += playerSpeed;
-	}
+	if (IsKeyDown(KEY_RIGHT)) {
 
+		if (x + width + speed >= GetScreenWidth()) {
+			x = GetScreenWidth() - width;
+		}
+		x += speed;
+	}
+	if (IsKeyDown(KEY_LEFT)) {
+		if(x - speed <= 0) {
+			x = 0;
+		}
+
+		x -= speed;
+	}
 }
