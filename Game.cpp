@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Player.h"
 #include "raylib.h"
 
 Game::Game(std::string tabName, int windowWidth, int windowHeight) :
@@ -7,18 +8,22 @@ Game::Game(std::string tabName, int windowWidth, int windowHeight) :
 	_windowHeight(windowHeight) {
 
 	InitWindow(_windowWidth, _windowHeight, _tabName.c_str());
+    SetTargetFPS(60);
+
+    Player player(_windowWidth / 2 - _windowWidth * 0.1, _windowHeight * 0.9, _windowWidth * 0.20, _windowHeight * 0.05);
 
     while (!WindowShouldClose())
     {
+        //Update
+        if (IsKeyDown(KEY_RIGHT)) player.Move(2);
+        if (IsKeyDown(KEY_LEFT)) player.Move(-2);
+
+
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-        Rectangle r;
-        r.x = 190;
-        r.y = 190;
-        r.width = 50;
-        r.height = 50;
-        DrawRectangleRec(r, LIGHTGRAY);
+
+        player.Draw();
+
         EndDrawing();
     }
 

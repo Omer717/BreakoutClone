@@ -4,7 +4,7 @@
 int main(void)
 {
     std::string tabName = "Breakout Clone";
-    int windowWidth = 700;
+    int windowWidth = 800;
     int windowHeight = 500;
 
     Game game(tabName, windowWidth, windowHeight);
