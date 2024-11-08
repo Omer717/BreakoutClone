@@ -1,24 +1,13 @@
-#include "raylib.h"
+#include <string>
+#include "Game.h"
 
 int main(void)
 {
-    InitWindow(800, 450, "raylib [core] example - basic window");
+    std::string tabName = "Breakout Clone";
+    int windowWidth = 700;
+    int windowHeight = 500;
 
-    while (!WindowShouldClose())
-    {
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-        Rectangle r;
-        r.x = 190;
-        r.y = 190;
-        r.width = 50;
-        r.height = 50;
-        DrawRectangleRec(r, LIGHTGRAY);
-        EndDrawing();
-    }
-
-    CloseWindow();
+    Game game(tabName, windowWidth, windowHeight);
 
     return 0;
 }
