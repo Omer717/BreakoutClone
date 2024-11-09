@@ -15,6 +15,10 @@ Game::Game(std::string tabName, int windowWidth, int windowHeight) :
     _windowWidth(windowWidth),
     _windowHeight(windowHeight) {
 
+    init_game();
+}
+
+void Game::init_game() {
     _health = 3;
     _score = 0;
     _player = std::make_unique<Player>(_windowWidth / 2 - _windowWidth * 0.1, _windowHeight * 0.9, _windowWidth * 0.20, _windowHeight * 0.05, PLAYERSPEED);
@@ -34,31 +38,31 @@ Game::Game(std::string tabName, int windowWidth, int windowHeight) :
     }
 }
 
-
 void Game::start() {
     InitWindow(_windowWidth, _windowHeight, _tabName.c_str());
     SetTargetFPS(60);
 
     bool gameStarted = false;
 
-    while (!WindowShouldClose() && !is_won())
+    while (!WindowShouldClose())
     { 
 
         // Start game when pressing space
         if (!gameStarted && IsKeyPressed(KEY_SPACE)) {
             gameStarted = true;
-            _ball->speedX = BALLSPEED - 2;
+            _ball->speedX = BALLSPEED;
             _ball->speedY = BALLSPEED;
         }
-
 
         //Update
         _player->move();
         _ball->move();
 
         // Check for collision
+        // Ball vs Player
         _ball->check_collision(_player->get_rectangle());
 
+        // Ball vs Boxes
         for (int i = 0; i < _boxes.size(); i++) {
             for (int j = 0; j < _boxes[i].size(); j++) {
                 if (_ball->check_collision(_boxes[i][j]->get_rectangle())) {
@@ -137,7 +141,6 @@ bool Game::is_won() {
             return false;
         }
     }
-
     return true;
 }
 

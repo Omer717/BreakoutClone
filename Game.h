@@ -23,6 +23,7 @@ private:
 	int _health;
 	int _score;
 
+	void init_game();
 	void draw_score();
 	void draw_health();
 	void draw_alert(std::string alert);
