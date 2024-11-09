@@ -19,7 +19,6 @@ Game::Game(std::string tabName, int windowWidth, int windowHeight) :
     _player = std::make_unique<Player>(_windowWidth / 2 - _windowWidth * 0.1, _windowHeight * 0.9, _windowWidth * 0.20, _windowHeight * 0.05, PLAYERSPEED);
     _ball = std::make_unique<Ball>(_windowWidth / 2, _windowHeight / 2, 0, 0, 10);
 
-    int numOfBoxesInRow = (_windowWidth - 10) / BOX_SIZE;
     int boxXIndex = 20;
     int boxYIndex = 45;
     _boxes.resize(3);
@@ -57,10 +56,7 @@ void Game::start() {
         _ball->move();
 
         // Check for collision
-
-        if (CheckCollisionCircleRec(Vector2{ _ball->x, _ball->y }, _ball->radius, _player->get_rectangle())) {
-            _ball->speedY *= -1;
-        }
+        _ball->check_collision(_player->get_rectangle());
 
         BeginDrawing();
         ClearBackground(RAYWHITE);

@@ -16,6 +16,36 @@ void Ball::move() {
 		speedY *= -1;
 	}
 
+	_px = x;
+	_py = y;
 	x += speedX;
 	y += speedY;
+}
+
+void Ball::check_collision(Rectangle rect) {
+
+	int left = rect.x;
+	int right = rect.x + rect.width;
+	int top = rect.y;
+	int bottom = rect.y + rect.height;
+
+	if (CheckCollisionCircleRec(Vector2{ x, y }, radius, rect)) {
+
+		if (_px < left) {
+			speedX *= -1;
+			x = left - radius;
+		}
+		else if (_px > right) {
+			speedX *= -1;
+			x = right + radius;
+		}
+		else if (_py < top) {
+			speedY *= -1;
+			y = top - radius;
+		}
+		else if (_py > bottom) {
+			speedY *= -1;
+			y = bottom + radius;
+		}
+	}
 }
