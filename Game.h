@@ -2,7 +2,9 @@
 #include <string>
 #include "Player.h"
 #include "Ball.h"
+#include "Box.h"
 #include <iostream>
+#include <vector>
 
 class Game
 {
@@ -16,6 +18,7 @@ private:
 
 	std::unique_ptr<Player> _player;
 	std::unique_ptr<Ball> _ball;
+	std::vector<std::vector<std::unique_ptr<Box>>> _boxes;
 
 	int _score;
 
