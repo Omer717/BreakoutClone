@@ -40,7 +40,7 @@ void Game::start() {
 
     bool gameStarted = false;
 
-    while (!WindowShouldClose())
+    while (!WindowShouldClose() && !is_won())
     { 
 
         // Start game when pressing space
@@ -58,6 +58,15 @@ void Game::start() {
         // Check for collision
         _ball->check_collision(_player->get_rectangle());
 
+        for (int i = 0; i < _boxes.size(); i++) {
+            for (int j = 0; j < _boxes[i].size(); j++) {
+                if (!(_boxes[i][j]->isHit) && _ball->check_collision(_boxes[i][j]->get_rectangle())) {
+                    _score += 1;
+                    _boxes[i][j]->isHit = true;
+                }
+            }
+        }
+
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
@@ -67,7 +76,9 @@ void Game::start() {
 
         for (int i = 0; i < _boxes.size(); i++) {
             for (int j = 0; j < _boxes[i].size(); j++) {
-                _boxes[i][j]->draw();
+                if (!(_boxes[i][j]->isHit)) {
+                    _boxes[i][j]->draw();
+                }
             }
         }
 
@@ -79,4 +90,16 @@ void Game::start() {
 
 void Game::draw_score() {
     DrawText(std::format("Score: {}", _score).c_str(), 5, 5, 26, BLACK);
+}
+
+bool Game::is_won() {
+    for (int i = 0; i < _boxes.size(); i++) {
+        for (int j = 0; j < _boxes[i].size(); j++) {
+            if (!(_boxes[i][j]->isHit)) {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }

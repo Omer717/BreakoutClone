@@ -23,4 +23,5 @@ private:
 	int _score;
 
 	void draw_score();
+	bool is_won();
 };

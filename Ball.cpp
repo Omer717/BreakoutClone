@@ -22,7 +22,7 @@ void Ball::move() {
 	y += speedY;
 }
 
-void Ball::check_collision(Rectangle rect) {
+bool Ball::check_collision(Rectangle rect) {
 
 	int left = rect.x;
 	int right = rect.x + rect.width;
@@ -47,5 +47,9 @@ void Ball::check_collision(Rectangle rect) {
 			speedY *= -1;
 			y = bottom + radius;
 		}
+
+		return true;
 	}
+
+	return false;
 }
