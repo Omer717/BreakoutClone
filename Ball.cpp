@@ -1,7 +1,7 @@
 #include "Ball.h"
 #include "raylib.h"
 
-Ball::Ball(float x, float y, int speedX, int speedY, float radius) : x(x), y(y), speedX(speedX), speedY(speedY), radius(radius) {}
+Ball::Ball(float x, float y, int speedX, int speedY, float radius) : x(x), y(y), speedX(speedX), speedY(speedY), radius(radius), _px(x), _py(y) {}
 
 void Ball::draw() {
 	DrawCircle(x, y, radius, BLACK);
@@ -52,4 +52,8 @@ bool Ball::check_collision(Rectangle rect) {
 	}
 
 	return false;
+}
+
+bool Ball::is_out_of_bounds() {
+	return y - radius > GetScreenHeight();
 }

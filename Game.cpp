@@ -15,6 +15,7 @@ Game::Game(std::string tabName, int windowWidth, int windowHeight) :
     _windowWidth(windowWidth),
     _windowHeight(windowHeight) {
 
+    _health = 3;
     _score = 0;
     _player = std::make_unique<Player>(_windowWidth / 2 - _windowWidth * 0.1, _windowHeight * 0.9, _windowWidth * 0.20, _windowHeight * 0.05, PLAYERSPEED);
     _ball = std::make_unique<Ball>(_windowWidth / 2, _windowHeight / 2, 0, 0, 10);
@@ -46,7 +47,7 @@ void Game::start() {
         // Start game when pressing space
         if (!gameStarted && IsKeyPressed(KEY_SPACE)) {
             gameStarted = true;
-            _ball->speedX = BALLSPEED;
+            _ball->speedX = BALLSPEED - 2;
             _ball->speedY = BALLSPEED;
         }
 
@@ -69,14 +70,35 @@ void Game::start() {
             }
         }
 
+        if (_ball->is_out_of_bounds()) {
+            _ball->x = _windowWidth / 2;
+            _ball->y = _windowHeight / 2;
+            _health--;
+        }
+
+        if (_health <= 0) {
+            _ball->speedX = 0;
+            _ball->speedY = 0;
+        }
+
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
         if (!gameStarted) {
-            draw_start_game();
+            draw_alert(std::string("Press SPACE to start playing!"));
         }
 
+        if (is_won()) {
+            draw_alert(std::string("You Won!"));
+        }
+
+        if (_health <= 0) {
+            draw_alert(std::format("You Lost! Score: {}", _score).c_str());
+        }
+
+        draw_health();
         draw_score();
+
         _player->draw();
         _ball->draw();
 
@@ -96,6 +118,19 @@ void Game::draw_score() {
     DrawText(std::format("Score: {}", _score).c_str(), 5, 5, 26, BLACK);
 }
 
+void Game::draw_health() {
+    int x = 15;
+    int y = _windowHeight - 25;
+    int lifeWidth = 50;
+    int lifeHeight = 10;
+    
+    for (int i = 0; i < _health; i++) {
+        DrawRectangleLines(x, y, lifeWidth, lifeHeight, RED);
+        x += lifeWidth + 5;
+    }
+
+}
+
 bool Game::is_won() {
     for (int i = 0; i < _boxes.size(); i++) {
         if (!_boxes[i].empty()) {
@@ -106,10 +141,8 @@ bool Game::is_won() {
     return true;
 }
 
-void Game::draw_start_game() {
-    std::string str = "Press SPACE to start playing!";
+void Game::draw_alert(std::string alert) {
     int fontSize = 26;
-
-    int textWidth = MeasureText(str.c_str(), fontSize);
-    DrawText(str.c_str(), _windowWidth / 2 - textWidth / 2, _windowHeight / 2 - 45, 26, BLACK);
+    int textWidth = MeasureText(alert.c_str(), fontSize);
+    DrawText(alert.c_str(), _windowWidth / 2 - textWidth / 2, _windowHeight / 2 - 45, 26, BLACK);
 }

@@ -20,10 +20,12 @@ private:
 	std::unique_ptr<Ball> _ball;
 	std::vector<std::vector<std::unique_ptr<Box>>> _boxes;
 
+	int _health;
 	int _score;
 
 	void draw_score();
-	void draw_start_game();
+	void draw_health();
+	void draw_alert(std::string alert);
 
 	bool is_won();
 };

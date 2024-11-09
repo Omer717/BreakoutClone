@@ -11,6 +11,7 @@ public:
 	void draw();
 	void move();
 	bool check_collision(Rectangle rect);
+	bool is_out_of_bounds();
 
 private:
 	float _px, _py;
