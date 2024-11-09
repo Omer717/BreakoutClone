@@ -6,7 +6,7 @@
 #include <iostream>
 #include <format>
 
-#define PLAYERSPEED 5
+#define PLAYERSPEED 7
 #define BALLSPEED 5
 #define BOX_SIZE 40
 
@@ -60,9 +60,11 @@ void Game::start() {
 
         for (int i = 0; i < _boxes.size(); i++) {
             for (int j = 0; j < _boxes[i].size(); j++) {
-                if (!(_boxes[i][j]->isHit) && _ball->check_collision(_boxes[i][j]->get_rectangle())) {
+                if (_ball->check_collision(_boxes[i][j]->get_rectangle())) {
                     _score += 1;
-                    _boxes[i][j]->isHit = true;
+                    std::vector<std::unique_ptr<Box>>::iterator it = _boxes[i].begin();
+                    std::advance(it, j);
+                    _boxes[i].erase(it);
                 }
             }
         }
@@ -70,15 +72,17 @@ void Game::start() {
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
+        if (!gameStarted) {
+            draw_start_game();
+        }
+
         draw_score();
         _player->draw();
         _ball->draw();
 
         for (int i = 0; i < _boxes.size(); i++) {
             for (int j = 0; j < _boxes[i].size(); j++) {
-                if (!(_boxes[i][j]->isHit)) {
-                    _boxes[i][j]->draw();
-                }
+                _boxes[i][j]->draw();
             }
         }
 
@@ -94,12 +98,18 @@ void Game::draw_score() {
 
 bool Game::is_won() {
     for (int i = 0; i < _boxes.size(); i++) {
-        for (int j = 0; j < _boxes[i].size(); j++) {
-            if (!(_boxes[i][j]->isHit)) {
-                return false;
-            }
+        if (!_boxes[i].empty()) {
+            return false;
         }
     }
 
     return true;
+}
+
+void Game::draw_start_game() {
+    std::string str = "Press SPACE to start playing!";
+    int fontSize = 26;
+
+    int textWidth = MeasureText(str.c_str(), fontSize);
+    DrawText(str.c_str(), _windowWidth / 2 - textWidth / 2, _windowHeight / 2 - 45, 26, BLACK);
 }

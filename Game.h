@@ -23,5 +23,7 @@ private:
 	int _score;
 
 	void draw_score();
+	void draw_start_game();
+
 	bool is_won();
 };
